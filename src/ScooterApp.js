@@ -14,14 +14,14 @@ class ScooterApp {
   }
 
   loginUser(username, password){
-    if (!username in this.registeredUsers) throw new Error('User does not exist')
+    if (!this.registeredUsers[username]) throw new Error('User does not exist')
 
     const currentUser = this.registeredUsers[username]
     currentUser.login(password);
   }
 
   logoutUser(username){
-    if (!username in this.registeredUsers) throw new Error('User does not exist')
+    if (!this.registeredUsers[username]) throw new Error('User does not exist')
 
     const currentUser = this.registeredUsers[username]
     currentUser.logout();
@@ -31,7 +31,7 @@ class ScooterApp {
 
   createScooter(station){
     if (!station) throw new Error('Must include station')
-    if (!station in this.stations) throw new Error('Station does not exist')
+    if (!this.stations[station]) throw new Error('Station does not exist')
 
     const newScooter = new Scooter(station)
 
@@ -68,7 +68,7 @@ class ScooterApp {
       if (currentStation.includes(scooter)){
         scooter.rent(user);
         console.log(`Scooter #${scooter.serial} rented to ${user.username}`);
-        return
+        break
       }
     }
   }

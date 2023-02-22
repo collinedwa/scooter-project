@@ -39,10 +39,10 @@ class Scooter{
 
     console.log('Starting charge')
 
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
     while(this.charge < 100){
+      await new Promise(resolve => setTimeout(resolve, 30));
       this.charge++;
+      if (this.charge % 25 == 0) console.log(`Scooter at ${this.charge}%`)
     }
 
     console.log('Charge complete')
@@ -53,7 +53,7 @@ class Scooter{
 
     console.log('Starting repair')
 
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 4000));
 
     this.isBroken = false;
 
