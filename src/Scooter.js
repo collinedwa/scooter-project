@@ -24,8 +24,6 @@ class Scooter{
 
     this.station = null;
     this.user = user;
-
-    console.log(`Scooter #${this.serial} rented to ${user.username}`)
   }
 
   dock(station){
@@ -34,8 +32,6 @@ class Scooter{
 
     this.station = station;
     this.user = null;
-
-    console.log(`Scooter #${this.serial} docked`)
   }
 
   async recharge(){

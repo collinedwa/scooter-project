@@ -37,7 +37,7 @@ class ScooterApp {
 
     this.stations[station].push(newScooter)
 
-    console.log('Created new scooter')
+    console.log(`Created new scooter (id: ${newScooter.serial})`)
   }
 
   dockScooter(scooter, station){
@@ -56,7 +56,7 @@ class ScooterApp {
     }
 
     scooter.dock(station);
-    console.log('Scooter docked.')
+    console.log(`Scooter #${scooter.serial} docked at ${station}`)
   }
 
   rentScooter(scooter, user){
@@ -67,7 +67,7 @@ class ScooterApp {
       const currentStation = this.stations[station]
       if (currentStation.includes(scooter)){
         scooter.rent(user);
-        console.log('Scooter successfully rented');
+        console.log(`Scooter #${scooter.serial} rented to ${user.username}`);
         return
       }
     }
@@ -75,8 +75,15 @@ class ScooterApp {
   }
 
   print(){
-    console.log(this.stations)
-    console.log(this.registeredUsers)
+    console.log('STATIONS:');
+    for(let station in this.stations){
+      console.log(station);
+    }
+    console.log('');
+    console.log('USERS:');
+    for(let user in this.registeredUsers){
+      console.log(user);
+    }
   }
 }
 
