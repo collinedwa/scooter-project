@@ -71,7 +71,6 @@ class ScooterApp {
         return
       }
     }
-    throw new Error('Scooter does not exist');
   }
 
   print(){
