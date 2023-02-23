@@ -4,50 +4,50 @@ const ScooterApp = require('../src/ScooterApp')
 
 // ScooterApp tests here
 describe('ScooterApp tests', () => {
-// construction
+    // construction
     test('ScooterApp construction', () => {
         newScooterApp = new ScooterApp();
     })
-// register user
+    // register user
     test('register user', () => {
-        newScooterApp.registerUser('goob','goober',20);
+        newScooterApp.registerUser('goob', 'goober', 20);
 
         tooYoung = () => {
-            newScooterApp.registerUser('todd','howard',12);
+            newScooterApp.registerUser('todd', 'howard', 12);
         }
         expect(tooYoung).toThrow();
 
         alreadyRegistered = () => {
-            newScooterApp.registerUser('goob','goober',20);
+            newScooterApp.registerUser('goob', 'goober', 20);
         }
 
         expect(alreadyRegistered).toThrow();
     })
-// log in
+    // log in
     test('log in', () => {
         wrongPassword = () => {
-            newScooterApp.loginUser('goob','reboog');
+            newScooterApp.loginUser('goob', 'reboog');
         }
 
         expect(wrongPassword).toThrow();
 
         invalidUser = () => {
-            newScooterApp.loginUser('gooba','reboog');
+            newScooterApp.loginUser('gooba', 'reboog');
         }
 
         expect(invalidUser).toThrow();
 
-        newScooterApp.loginUser('goob','goober');
+        newScooterApp.loginUser('goob', 'goober');
 
         expect(newScooterApp.registeredUsers['goob'].loggedIn).toBe(true);
 
         alreadyLoggedIn = () => {
-            newScooterApp.loginUser('goob','goober');
+            newScooterApp.loginUser('goob', 'goober');
         }
 
         expect(alreadyLoggedIn).toThrow();
     })
-// log out
+    // log out
     test('log out', () => {
         newScooterApp.logoutUser('goob');
 
@@ -56,20 +56,20 @@ describe('ScooterApp tests', () => {
         alreadyLoggedOut = () => {
             newScooterApp.logoutUser('goob');
         }
-        
+
         expect(alreadyLoggedOut).toThrow();
 
         notAUser = () => {
             newScooterApp.logoutUser('nobody');
         }
-        
+
         expect(notAUser).toThrow();
     })
 
-// create scooter
+    // create scooter
     test('create scooter', () => {
         newScooterApp.createScooter('Downtown');
-        
+
         expect(newScooterApp.stations['Downtown'].length).toBe(1)
 
         newScooterApp.createScooter('Downtown');
@@ -89,29 +89,29 @@ describe('ScooterApp tests', () => {
         expect(noStation).toThrow();
     })
 
-// rent scooter
+    // rent scooter
     test('rent scooter', () => {
         const currentUser = newScooterApp.registeredUsers['goob'];
         const currentScooter = newScooterApp.stations['Downtown'][0];
 
         notLoggedIn = () => {
-            newScooterApp.rentScooter(currentScooter,currentUser);
+            newScooterApp.rentScooter(currentScooter, currentUser);
         }
-        
+
         expect(notLoggedIn).toThrow();
 
-        newScooterApp.loginUser('goob','goober')
+        newScooterApp.loginUser('goob', 'goober')
 
-        newScooterApp.rentScooter(currentScooter,currentUser);
+        newScooterApp.rentScooter(currentScooter, currentUser);
 
         alreadyRented = () => {
-            newScooterApp.rentScooter(currentScooter,currentUser);
+            newScooterApp.rentScooter(currentScooter, currentUser);
         }
-        
+
         expect(alreadyRented).toThrow();
     })
 
-// dock scooter
+    // dock scooter
     test('dock scooter', () => {
         const currentScooter = newScooterApp.stations['Downtown'][0];
 
@@ -129,20 +129,30 @@ describe('ScooterApp tests', () => {
 
         expect(alreadyDocked).toThrow();
     })
-
-    test('dock at different station', () => {
+    // different stations
+    test('dock at different stations', () => {
         const currentUser = newScooterApp.registeredUsers['goob'];
-        const currentScooter = newScooterApp.stations['Downtown'][0];
+        let currentScooter;
+        let prev;
 
-        newScooterApp.rentScooter(currentScooter, currentUser);
+        for (let station in newScooterApp.stations) {
+            if (!currentScooter) {
+                currentScooter = newScooterApp.stations[station][0];
+                prev = station;
+            } else {
+                newScooterApp.rentScooter(currentScooter, currentUser);
+                newScooterApp.dockScooter(currentScooter, station);
 
-        newScooterApp.dockScooter(currentScooter, 'Residential');
+                expect(newScooterApp.stations[prev].includes(currentScooter)).toBe(false);
+                expect(newScooterApp.stations[station].includes(currentScooter)).toBe(true);
 
-        expect(newScooterApp.stations['Downtown'].includes(currentScooter)).toBe(false);
-        expect(newScooterApp.stations['Residential'].includes(currentScooter)).toBe(true);
+                currentScooter = newScooterApp.stations[station][0]
+                prev = station;
+            }
+        }
     })
 
-// print
+    // print
     test('print', () => {
         newScooterApp.print();
     })
