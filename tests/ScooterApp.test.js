@@ -146,10 +146,21 @@ describe('ScooterApp tests', () => {
                 expect(newScooterApp.stations[prev].includes(currentScooter)).toBe(false);
                 expect(newScooterApp.stations[station].includes(currentScooter)).toBe(true);
 
-                currentScooter = newScooterApp.stations[station][0]
+                currentScooter = newScooterApp.stations[station][0];
                 prev = station;
             }
         }
+    })
+
+    // serial test
+    test('serial increments', () => {
+        let currentScooter = newScooterApp.stations['Airport'][0];
+        expect(currentScooter.serial).toBe(2);
+
+        newScooterApp.createScooter('Residential');
+        currentScooter = newScooterApp.stations['Residential'][0];
+
+        expect(currentScooter.serial).toBe(3);
     })
 
     // print

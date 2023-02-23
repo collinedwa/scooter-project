@@ -92,5 +92,13 @@ describe('scooter methods', () => {
     expect(newScooter.requestRepair()).rejects.toThrow();
   })
 
+  //serial test
+  test('serial test', () => {
+    expect(newScooter.serial).toBe(2);
+
+    scooter3Serial = new Scooter('Place');
+    expect(scooter3Serial.serial).toBe(3);
+  })
+
 
 })
