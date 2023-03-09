@@ -5,6 +5,7 @@ class User {
   loggedIn;
 
   constructor(username, password, age){
+    // love this argument check
     if (!username || !password || !age) throw new Error('Missing arguments')
 
     this.username = username;

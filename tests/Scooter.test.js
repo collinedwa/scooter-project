@@ -11,22 +11,32 @@ describe('scooter object', () => {
 
 //Method tests
 describe('scooter methods', () => {
-  // tests here!
+
   test('Can construct', () => {
+    // TIL not adding 'let' or 'const' makes this visible to the entire file
+    // regardless of scope. while this is cool, I think it would be
+    // helpful to others who might read this to re-define the test object
+    // in each test, to ensure complete context in each block
     newScooter = new Scooter('Downtown')
 
     emptyStation = () => {
       testScooter = new Scooter()
     }
     expect(emptyStation).toThrow()
+
+    // consider adding an additional initialization test
+    // to verify initial attribute values
   })
+
   //rent method
+  // this is another example where separating each scenario into its
+  // own test block would increase readability
   test('Rent method', () => {
     newUser = new User('hey','hello',20)
 
     noCharge = () => {
-    newScooter.charge = 0;
-    newScooter.rent(newUser);
+      newScooter.charge = 0;
+      newScooter.rent(newUser);
     }
 
     expect(noCharge).toThrow();
@@ -49,6 +59,7 @@ describe('scooter methods', () => {
 
     expect(invalidUser).toThrow()
   })
+
   //dock method
   test('Dock method', () => {
     emptyStation = () => {
@@ -69,6 +80,7 @@ describe('scooter methods', () => {
 
     
   })
+
   //charge method
   test('recharge method', async () => {
     newScooter.charge = 0;

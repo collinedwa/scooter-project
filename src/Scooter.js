@@ -11,6 +11,7 @@ class Scooter{
 
     this.station = station;
     this.user = null;
+    // consider condensing these serial lines -> this.serial = Scooter.nextSerial++;
     this.serial = Scooter.nextSerial;
     Scooter.nextSerial++;
     this.charge = 100;
@@ -18,6 +19,7 @@ class Scooter{
   }
 
   rent(user){
+    // I like this structure of handling error cases first before the 'happy path' logic
     if(this.charge <= 20) throw new Error('scooter needs to charge');
     if(this.isBroken) throw new Error('scooter needs repair');
     if(this.user != null) throw new Error('scooter already rented')
@@ -39,6 +41,7 @@ class Scooter{
 
     console.log('Starting charge')
 
+    // love this solution to incrementally charge the scooter
     while(this.charge < 100){
       await new Promise(resolve => setTimeout(resolve, 30));
       this.charge++;
