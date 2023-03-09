@@ -6,15 +6,27 @@ const ScooterApp = require('../src/ScooterApp')
 describe('ScooterApp tests', () => {
     // construction
     test('ScooterApp construction', () => {
+
+        // similar thought in the scooter test suite:
+        // consider initializing a ScooterApp object for each 
+        // of your test blocks to have full context in each test
+        // of where newScooterApp is coming from
         newScooterApp = new ScooterApp();
+        // include an expectation statement here for this test
     })
+    
     // register user
     test('register user', () => {
+        // needs expectation statement for the happy-path use case
         newScooterApp.registerUser('goob', 'goober', 20);
 
         tooYoung = () => {
             newScooterApp.registerUser('todd', 'howard', 12);
         }
+
+        // additional similar comment in user suite:
+        // specifying which error is being thrown will improve readability
+        // and help distinguish between which errors to expect to be thrown
         expect(tooYoung).toThrow();
 
         alreadyRegistered = () => {
@@ -23,6 +35,7 @@ describe('ScooterApp tests', () => {
 
         expect(alreadyRegistered).toThrow();
     })
+
     // log in
     test('log in', () => {
         wrongPassword = () => {
@@ -47,6 +60,7 @@ describe('ScooterApp tests', () => {
 
         expect(alreadyLoggedIn).toThrow();
     })
+
     // log out
     test('log out', () => {
         newScooterApp.logoutUser('goob');
@@ -103,6 +117,7 @@ describe('ScooterApp tests', () => {
         newScooterApp.loginUser('goob', 'goober')
 
         newScooterApp.rentScooter(currentScooter, currentUser);
+        // happy path expectation statement needed
 
         alreadyRented = () => {
             newScooterApp.rentScooter(currentScooter, currentUser);
@@ -129,7 +144,9 @@ describe('ScooterApp tests', () => {
 
         expect(alreadyDocked).toThrow();
     })
+
     // different stations
+    // this test could also use a comment explaining what it's testing
     test('dock at different stations', () => {
         const currentUser = newScooterApp.registeredUsers['goob'];
         let currentScooter;
@@ -163,6 +180,8 @@ describe('ScooterApp tests', () => {
         expect(currentScooter.serial).toBe(3);
     })
 
+    // if we want to keep this test,
+    // consider testing the output in the console and verify it's what you expect
     // print
     test('print', () => {
         newScooterApp.print();
